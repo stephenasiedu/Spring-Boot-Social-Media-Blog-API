@@ -7,6 +7,7 @@ import javax.persistence.*;
  *
  * You should NOT make any modifications to this class.
  */
+
 @Entity
 @Table(name="account")
 public class Account {

@@ -38,7 +38,7 @@ SpringTest will verify the following
 
  - That you have, by any means, have a bean for the AccountService, MessageService, AccountRepository, MessageRepository, and SocialMediaController classes
  - That AccountRepository and MessageRepository are working JPARepositories based on their corresponding Account and Message entities
- - That your Spring Boot app leverages MVC by checking for Spring's default error message structure.
+ - That your Spring Boot app leverages MVC by checking for Spring's default  error message structure.
  
 The app will already be a Spring Boot app with a valid application.properties and valid database entities at the start.
 
