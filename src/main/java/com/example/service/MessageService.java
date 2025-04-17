@@ -120,7 +120,7 @@ public class MessageService {
      * @param messageId the ID of the message to delete
      */
     @Transactional
-    public void deleteMessageById(Integer messageId) {
+    public void deleteMessageById(Integer messageId) { 
         Message message = getMessageById(messageId);
         if (message != null) {
             messageRepository.delete(message);
