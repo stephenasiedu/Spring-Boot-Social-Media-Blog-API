@@ -36,10 +36,10 @@ public ResponseEntity<?> register(@RequestBody Account account) {
         }
     } catch (DuplicateUsernameException e) {
         return ResponseEntity.status(409)
-                .body("Unsuccessful registration: Username already exists.");
+                .body("");
     }
     return ResponseEntity.status(400)
-            .body("Client Error");
+            .body("");
 }
 
 
