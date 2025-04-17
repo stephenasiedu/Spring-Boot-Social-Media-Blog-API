@@ -30,17 +30,17 @@ public class SocialMediaController {
 @PostMapping("/register")
 public ResponseEntity<?> register(@RequestBody Account account) {
     try {
-        Account newAccount = accountService.registerAccount(account);
-        if (newAccount != null) {
-            return ResponseEntity.status(200).body(newAccount);
+        Account registerNewAccount = accountService.registerAccount(account);// Attempting to register a new account
+        // If the account is successfully registered, return it with a 200 status
+        if (registerNewAccount != null) {
+            return ResponseEntity.status(200)
+                    .body(registerNewAccount.getAccountId()
+                            + registerNewAccount.getUsername());
         }
     } catch (DuplicateUsernameException e) {
-        return ResponseEntity.status(409)
-                .body("Unsuccessful registration: Username already exists.");
+        return ResponseEntity.status(409).body("Unsuccessful registration: Username already exists.");
     }
-    return ResponseEntity.status(400)
-            .body("Client Error");
+    return ResponseEntity.status(400).body("Client Error");
 }
-
 
 }

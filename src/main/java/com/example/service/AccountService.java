@@ -20,12 +20,14 @@ public class AccountService {
 //    and an Account with that username does not already exist.
 
     public Account registerAccount(Account account){
-        Account currentAccount = accountRepository.findByUsername(account.getUsername());
-        if(currentAccount!=null || account.getPassword().length()>=4 || account.getUsername()!=null){
-            Account newAccount = accountRepository.save(account);
-            return account;
-        }else{
+        Account currentAccount = accountRepository.findByUsername(account.getUsername());//Checking if the username already exists
+        if(currentAccount ==null ||
+        account.getPassword().length()<4 ||
+        account.getUsername() ==null
+        ){
             return null;
+        }else{
+            return accountRepository.save(account);//Saving the account if all conditions are met and returning the saved account
         }
     }
 }
