@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,7 +25,9 @@ import java.util.Objects;
 @NoArgsConstructor
 public class MessageService {
 
+    @Autowired
     private MessageRepository messageRepository;
+    @Autowired
     private AccountRepository accountRepository;
     /**
      * Creates a new message.

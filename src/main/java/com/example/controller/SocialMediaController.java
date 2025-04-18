@@ -5,6 +5,7 @@ import com.example.entity.Message;
 import com.example.exception.DuplicateUsernameException;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
+
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.h2.engine.User;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
@@ -39,9 +42,9 @@ public class SocialMediaController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Account account) {
         try {
-            Account newAccount = accountService.registerAccount(account);
-            if (newAccount != null) {
-                return ResponseEntity.status(200).body(newAccount);
+            Account saveAccount = accountService.registerAccount(account);
+            if (saveAccount != null) {
+                return ResponseEntity.status(200).body(saveAccount);
             }
         } catch (DuplicateUsernameException e) {
             return ResponseEntity.status(409).body("Duplicate username");
@@ -54,15 +57,14 @@ public class SocialMediaController {
      * - If successful, returns the account as JSON with status 200.
      * - If login fails, returns status 401 (Unauthorized).
      */
-    @GetMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
-        Account account = accountService.login(username, password);
-        if (account != null) {
-            return ResponseEntity.status(200).body(account);
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Account login) {
+        Account account = accountService.login(login);
+        if (account == null) {
+            return ResponseEntity.status(401).body("");
         }
-        return ResponseEntity.status(401).body("Invalid credentials");
+        return ResponseEntity.status(200).body(account);
     }
-
     /**
      * Creates a new message.
      * - If successful, returns the created message as JSON with status 200.
@@ -71,10 +73,7 @@ public class SocialMediaController {
     @PostMapping("/messages")
     public ResponseEntity<?> createMessage(@RequestBody Message message, @RequestParam Integer userId) {
         Message newMessage = messageService.createMessage(message, userId);
-        if (newMessage != null) {
-            return ResponseEntity.status(200).body(message); // 200 OK with the created message
-        }
-        return ResponseEntity.status(400).body(""); // 400 Bad Request with no body
+        return ResponseEntity.status(200).body(newMessage);
     }
 
     /**
@@ -84,7 +83,7 @@ public class SocialMediaController {
     @GetMapping("/messages")
     public ResponseEntity<?> getAllMessages() {
         List<Message> messages = messageService.getAllMessages();
-        return ResponseEntity.ok(messages); // cleaner than status(200)
+        return ResponseEntity.status(200).body(messages); 
     }
 
     /**

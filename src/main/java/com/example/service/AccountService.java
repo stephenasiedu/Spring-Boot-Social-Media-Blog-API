@@ -5,7 +5,10 @@ import com.example.exception.DuplicateUsernameException;
 import com.example.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 
@@ -18,7 +21,9 @@ import javax.transaction.Transactional;
 @NoArgsConstructor
 public class AccountService {
 
+    @Autowired
     private AccountRepository accountRepository;
+    /**
     /**
      * Registers a new account.
      * 
@@ -33,18 +38,20 @@ public class AccountService {
      */
     @Transactional
     public Account registerAccount(Account account) {
-        if (account.getUsername() == null || account.getUsername().isBlank()) {
+        if (account.getUsername() == null 
+        || account.getUsername().isBlank()
+        || account.getPassword() == null
+        || account.getPassword().length() < 4) {
             return null;
         }
-        if (account.getPassword() == null || account.getPassword().length() < 4) {
-            return null;
-        }
+
         Account existing = accountRepository.findByUsername(account.getUsername());
         if (existing != null) {
             throw new DuplicateUsernameException("Username already exists");
         }
         return accountRepository.save(account);
     }
+
 
     /**
      * Logs in a user.
@@ -57,9 +64,9 @@ public class AccountService {
      * @return the Account entity if login is successful, otherwise null
      */
     @Transactional
-    public Account login(String username, String password) {
-        Account account = accountRepository.findByUsername(username);
-        if (account != null && account.getPassword().equals(password)) {
+    public Account login(Account login) {
+        Account account = accountRepository.findByUsername(login.getUsername());
+        if (account != null && account.getPassword().equals(login.getPassword())) {
             return account;
         }
         return null;
