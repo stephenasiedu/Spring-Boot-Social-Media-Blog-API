@@ -96,7 +96,9 @@ public class MessageService {
     @Transactional
     public Message updateMessageById(Integer messageId, String messageText) {
         Message message = getMessageById(messageId);
-        if (message != null && messageText != null && !messageText.isBlank() && messageText.length() <= 255) {
+        if (message != null 
+        && messageText != null 
+        && !messageText.isBlank() && messageText.length() <= 255) {
             message.setMessageText(messageText);
             return messageRepository.save(message);
         }
@@ -123,10 +125,14 @@ public class MessageService {
      * @param messageId the ID of the message to delete
      */
     @Transactional
-    public void deleteMessageById(Integer messageId) { 
+    public Message deleteMessageById(Integer messageId) {
         Message message = getMessageById(messageId);
         if (message != null) {
-            messageRepository.delete(message);
+            messageRepository.deleteById(messageId);
+            return message;
         }
+
+        return null;
     }
+
 }

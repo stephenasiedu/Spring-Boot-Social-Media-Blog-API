@@ -104,12 +104,12 @@ public class SocialMediaController {
      */
     @DeleteMapping("/messages/{messageId}")
     public ResponseEntity<?> deleteMessageById(@PathVariable Integer messageId) {
-        Message message = messageService.getMessageById(messageId);
-        if (message != null) {
-            messageService.deleteMessageById(messageId);
+        Message deletedMessage = messageService.deleteMessageById(messageId);
+        if (deletedMessage != null) {
             return ResponseEntity.status(200).body(1);
+        }else {
+            return ResponseEntity.status(200).body("");
         }
-        return ResponseEntity.status(200).body(0);
     }
 
     /**
@@ -120,11 +120,12 @@ public class SocialMediaController {
     @PatchMapping("/messages/{messageId}")
     public ResponseEntity<?> UpdateMessageById(@PathVariable Integer messageId, @RequestBody String newMessageText) {
         Message message = messageService.updateMessageById(messageId, newMessageText);
-        if (message != null) {
-            return ResponseEntity.status(200).body(1);
+        if (message == null) {
+            return ResponseEntity.status(400).body(0);
         }
-        return ResponseEntity.status(400).body(0);
+        return ResponseEntity.status(200).body(1);
     }
+    
 
     /**
      * Retrieves all messages posted by a specific user.
