@@ -4,14 +4,15 @@ import com.example.entity.Account;
 import com.example.entity.Message;
 import com.example.repository.AccountRepository;
 import com.example.repository.MessageRepository;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -47,9 +48,7 @@ public class MessageService {
             return null;
         }
         Account user = accountRepository.getById(userId);
-        if(user == null){
-            return null;
-        }
+        if(user == null){return null;}
         
         return messageRepository.save(message);
     }

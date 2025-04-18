@@ -6,17 +6,11 @@ import com.example.exception.DuplicateUsernameException;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.h2.engine.User;
 
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
@@ -73,6 +67,9 @@ public class SocialMediaController {
     @PostMapping("/messages")
     public ResponseEntity<?> createMessage(@RequestBody Message message, @RequestParam Integer userId) {
         Message newMessage = messageService.createMessage(message, userId);
+        if (newMessage == null) {
+            return ResponseEntity.status(400).body("Client Error");
+        }
         return ResponseEntity.status(200).body(newMessage);
     }
 
