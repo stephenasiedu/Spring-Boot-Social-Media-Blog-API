@@ -23,15 +23,14 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
-    /**
+
     /**
      * Registers a new account.
-     * 
-     * Registration will be successful if:
+     * Registration is successful if:
      * - The username is not blank.
      * - The password is at least 4 characters long.
      * - An account with the same username does not already exist.
-     * 
+     *
      * @param account the account to register
      * @return the registered Account entity if successful, otherwise null
      * @throws DuplicateUsernameException if the username already exists
@@ -52,15 +51,11 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-
     /**
-     * Logs in a user.
-     * 
-     * Login will be successful if:
-     * - The username and password provided match an existing account in the database.
-     * 
-     * @param username the username of the account
-     * @param password the password of the account
+     * Authenticates a user.
+     * Login is successful if the provided username and password match an existing account.
+     *
+     * @param login the account credentials for authentication
      * @return the Account entity if login is successful, otherwise null
      */
     @Transactional

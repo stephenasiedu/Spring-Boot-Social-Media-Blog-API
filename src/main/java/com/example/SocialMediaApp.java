@@ -11,15 +11,14 @@ import org.springframework.web.client.RestTemplate;
 import static org.springframework.boot.SpringApplication.run;
 
 /**
- * This is a class that is used to run your application.
- * DO NOT CHANGE ANYTHING IN THIS CLASS
+ * Main application class for starting the Social Media API.
  */
 @SpringBootApplication
 public class SocialMediaApp {
     /**
-     * Runs the application
+     * Entry point for the application.
      * @param args The arguments of the program.
-     * @throws InterruptedException 
+     * @throws InterruptedException if the application is interrupted
      */
     public static void main(String[] args) throws InterruptedException {
         SpringApplication.run(SocialMediaApp.class, args);

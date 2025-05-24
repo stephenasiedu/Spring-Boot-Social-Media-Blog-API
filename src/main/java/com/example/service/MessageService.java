@@ -30,16 +30,16 @@ public class MessageService {
     private MessageRepository messageRepository;
     @Autowired
     private AccountRepository accountRepository;
+
     /**
      * Creates a new message.
-     * 
      * The creation will be successful if:
      * - The message text is not blank.
      * - The message text is not over 255 characters.
      * - The `postedBy` refers to an existing user.
-     * 
-     * @param messageText the text of the message
-     * @param postedBy the username of the account posting the message
+     *
+     * @param message the message entity to create
+     * @param userId the ID of the account posting the message
      * @return the created Message entity if successful, otherwise null
      */
     @Transactional
@@ -55,7 +55,7 @@ public class MessageService {
 
     /**
      * Retrieves all messages from the database.
-     * 
+     *
      * @return a list of all Message entities
      */
     @Transactional
@@ -65,7 +65,7 @@ public class MessageService {
 
     /**
      * Retrieves a message by its ID.
-     * 
+     *
      * @param messageId the ID of the message to retrieve
      * @return the Message entity if found, otherwise null
      */
@@ -82,12 +82,11 @@ public class MessageService {
 
     /**
      * Updates a message by its ID.
-     * 
      * The update will be successful if:
      * - The message ID exists.
      * - The new message text is not blank.
      * - The new message text is not over 255 characters.
-     * 
+     *
      * @param messageId the ID of the message to update
      * @param messageText the new text for the message
      * @return the updated Message entity if successful, otherwise null
@@ -106,7 +105,7 @@ public class MessageService {
 
     /**
      * Retrieves all messages posted by a specific user.
-     * 
+     *
      * @param accountId the ID of the account whose messages to retrieve
      * @return a list of Message entities posted by the user, or an empty list if none exist
      */
@@ -118,10 +117,10 @@ public class MessageService {
 
     /**
      * Deletes a message by its ID.
-     * 
      * The deletion will remove the message from the database if it exists.
-     * 
+     *
      * @param messageId the ID of the message to delete
+     * @return the deleted Message entity if it existed, otherwise null
      */
     @Transactional
     public Message deleteMessageById(Integer messageId) {
@@ -130,8 +129,6 @@ public class MessageService {
             messageRepository.deleteById(messageId);
             return message;
         }
-
         return null;
     }
-
 }

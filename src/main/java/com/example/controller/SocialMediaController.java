@@ -11,12 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 /**
- * TODO: You will need to write your own endpoints and handlers for your controller using Spring. The endpoints you will need can be
- * found in readme.md as well as the test cases. You be required to use the @GET/POST/PUT/DELETE/etc Mapping annotations
- * where applicable as well as the @ResponseBody and @PathVariable annotations. You should
- * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
+ * SocialMediaController provides REST endpoints for account registration, authentication,
+ * and message management within the social media application.
+ * Endpoints include user registration, login, message creation, retrieval, update, and deletion.
  */
 
 @RestController
@@ -26,12 +24,11 @@ public class SocialMediaController {
     @Autowired
     private MessageService messageService;
 
-
     /**
      * Registers a new account.
-     * - If successful, returns the created account as JSON with status 200.
-     * - If the username is a duplicate, returns status 409 (Conflict).
-     * - If registration fails for other reasons, returns status 400 (Bad Request).
+     * - Returns the created account as JSON with HTTP 200 on success.
+     * - Returns HTTP 409 (Conflict) if the username already exists.
+     * - Returns HTTP 400 (Bad Request) for other registration failures.
      */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Account account) {
@@ -47,9 +44,9 @@ public class SocialMediaController {
     }
 
     /**
-     * Logs in a user.
-     * - If successful, returns the account as JSON with status 200.
-     * - If login fails, returns status 401 (Unauthorized).
+     * Authenticates a user.
+     * - Returns the account as JSON with HTTP 200 on successful login.
+     * - Returns HTTP 401 (Unauthorized) if authentication fails.
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Account login) {
@@ -59,10 +56,11 @@ public class SocialMediaController {
         }
         return ResponseEntity.status(200).body(account);
     }
+
     /**
      * Creates a new message.
-     * - If successful, returns the created message as JSON with status 200.
-     * - If creation fails, returns status 400 (Bad Request).
+     * - Returns the created message as JSON with HTTP 200 on success.
+     * - Returns HTTP 400 (Bad Request) if message creation fails.
      */
     @PostMapping("/messages")
     public ResponseEntity<?> createMessage(@RequestBody Message message, @RequestParam Integer userId) {
@@ -75,7 +73,7 @@ public class SocialMediaController {
 
     /**
      * Retrieves all messages.
-     * - Always returns a list of messages (can be empty) as JSON with status 200.
+     * - Returns a list of messages (possibly empty) as JSON with HTTP 200.
      */
     @GetMapping("/messages")
     public ResponseEntity<?> getAllMessages() {
@@ -85,8 +83,8 @@ public class SocialMediaController {
 
     /**
      * Retrieves a message by its ID.
-     * - If the message exists, returns it as JSON with status 200.
-     * - If the message does not exist, returns an empty response with status 200.
+     * - Returns the message as JSON with HTTP 200 if found.
+     * - Returns an empty response with HTTP 200 if not found.
      */
     @GetMapping("/messages/{messageId}")
     public ResponseEntity<?> getMessageById(@PathVariable Integer messageId) {
@@ -96,8 +94,8 @@ public class SocialMediaController {
 
     /**
      * Deletes a message by its ID.
-     * - If the message exists, deletes it and returns 1 with status 200.
-     * - If the message does not exist, returns 0 with status 200.
+     * - Returns 1 with HTTP 200 if the message was deleted.
+     * - Returns an empty response with HTTP 200 if the message does not exist.
      */
     @DeleteMapping("/messages/{messageId}")
     public ResponseEntity<?> deleteMessageById(@PathVariable Integer messageId) {
@@ -111,8 +109,8 @@ public class SocialMediaController {
 
     /**
      * Updates a message by its ID.
-     * - If the update is successful, returns 1 with status 200.
-     * - If the update fails, returns 0 with status 400.
+     * - Returns 1 with HTTP 200 if the update is successful.
+     * - Returns 0 with HTTP 400 if the update fails.
      */
     @PatchMapping("/messages/{messageId}")
     public ResponseEntity<?> UpdateMessageById(@PathVariable Integer messageId, @RequestBody String newMessageText) {
@@ -123,10 +121,9 @@ public class SocialMediaController {
         return ResponseEntity.status(200).body(1);
     }
     
-
     /**
      * Retrieves all messages posted by a specific user.
-     * - Always returns a list of messages (can be empty) as JSON with status 200.
+     * - Returns a list of messages (possibly empty) as JSON with HTTP 200.
      */
     @GetMapping("accounts/{accountId}/messages")
     public ResponseEntity<?> getMessagesByAccountId(@PathVariable Integer accountId) {

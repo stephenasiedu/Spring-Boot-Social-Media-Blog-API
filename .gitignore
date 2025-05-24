@@ -1,9 +1,28 @@
-target/
-h2/
-history_log.txt
-testCases_log.txt
-restructure_tmp/
-restructured_labs/
-.revature/tmp
-.vscode
-.idea/
+# Maven target directory
+/target/
+
+# IDE files
+/.idea/
+/*.iml
+*.class
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment and config
+.env
+application.properties
+
+# Lombok generated files
+lombok.config
+
+# H2 database files (if persisted locally)
+*.mv.db
+*.h2.db
+
+# VS Code settings
+.vscode/
